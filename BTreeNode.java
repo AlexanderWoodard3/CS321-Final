@@ -112,4 +112,55 @@ public class BTreeNode {
   } 
     
     
+  //Node Stuff
+  public Node(){
+    fileIndex = nextAvailableFileIndex; 
+    nextAvailableFileIndex += nodeSizeOnDisk(); 
+  }
+  
+  int nodeSizeDisk(){
+    return ( 2 * t) * 64 + ( 2 * t - 1) * ( 64 + 32 ); 
+  )
+  
+  Node getNode(long idx){
+    Node newNode = null; 
+    LinkedList<Node> nodeList = cache.returnAllitems(); 
+    for (Node n : nodeList){
+      if(n.fileIndex == idx){
+        new Node = n; 
+        return newNode; 
+      }
+    }
+    return newNode; 
+  }  
+  
+  Node child (int i) {
+    long offset = children.get(i -1); 
+    
+    Node node = new Node(); 
+    node.readFromFile(offset); 
+    return node; 
+  }  
+    
+    
+    
+  Key key(int i){
+    return keys.get(i - 1); 
+  }
+    
+  void setKey(in i, Key key); 
+    if(i - 1 == keys.size())
+      keys.add(key); 
+    else
+      keys.set(i-1, key); 
+  }
+    
+  void setChild(int i, Node c){
+    if(i - 1 == children.size())
+      children.add(c.fileIndex); 
+    else
+      child.set(i - 1, c.fileIndex); 
+  }
+    
+    
 }
