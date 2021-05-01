@@ -1,5 +1,0 @@
-//Defines the object to be inserted into the BTree
-
-Public Class TreeObject{
-
-}
