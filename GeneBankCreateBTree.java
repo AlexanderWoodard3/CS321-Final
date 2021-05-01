@@ -200,9 +200,9 @@ public class GeneBankCreateBTree {
         System.out.println("\t<0/1 (no/with cache)> - To have the program use a cache, enter 1. To have the program not use a chace, enter 0.");
         System.out.println("\t<degree> - The degree for the created BTree file.");
         System.out.println("\t<gdk file> - The file of genes that the program will analyze and make a BTree out of.");
-        System.out.println("\t<sequence length> - he length for the sequence of genes that the program will read.");
-        System.out.println("\t<cache size> - The size of the cache for the programassuming that cache is wanted.");
-        System.out.println("\t[<debug level>] - Optional command line argument. If a 0 is entered, the results will");
+        System.out.println("\t<sequence length> - The length for the sequence of genes that the program will read.");
+        System.out.println("\t<cache size> - The size of the cache for the program assuming that cache is wanted.");
+        System.out.println("\t[<debug level>] - Optional command line argument. If a 0 is entered, the results will be printed to the error stream and if 1 is entered, a file called dump is created.");
     
     }
 
