@@ -20,7 +20,7 @@ public class GeneBankSearch {
 
 		boolean useCache = (Integer.parseInt(args[0]) == 1)? true : false;
 
-		String bTreeFile = args[1];
+		String bTreeFileName = args[1];
 
 		/* Process query file into arrayList queries */
 		String queryFileString = args[2];
@@ -58,7 +58,7 @@ public class GeneBankSearch {
 		}
 		
 		/* Create B Tree from file and search for each query */
-		BTree searchTree = new BTree(bTreeFile);
+		BTree searchTree = new BTree(bTreeFileName);
 		StringBuilder dumpBuilder = new StringBuilder();
 		for(Long l : queries)
 		{
@@ -77,10 +77,10 @@ public class GeneBankSearch {
 		{
 			try
 			{
-				File newFile = new File(bTreeFile + ".queries.dump");
+				File newFile = new File(bTreeFileName + ".queries.dump");
 				newFile.createNewFile();
 
-				FileWriter dumpWriter = new FileWriter(bTreeFile + ".queries.dump");
+				FileWriter dumpWriter = new FileWriter(bTreeFileName + ".queries.dump");
 				dumpWriter.write(dumpBuilder.toString());
 				dumpWriter.close();
 			}
