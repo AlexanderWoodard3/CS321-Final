@@ -6,7 +6,7 @@ public class BTreeNode {
     private Node root; 
     private int height; 
     private int n; 
-    private int nodeCount; 
+    private int nodeCount =1; 
     
     public class Node{
     long fileIndex; 
@@ -42,9 +42,53 @@ public class BTreeNode {
   }
   
   //NEED TO DO  
-  publlic int BTreeSearchFrequency(long key){
+  publlic Long BTreeSearchFrequency(long key){
     
   }
+      
+  private Long search(Node x, Long key, int height){
+      Entry[] children = x.children; 
+      
+      //external nde
+      if(height ==0){ 
+          for(int j = 0; j < x.m; j++){
+              if(key.equals(x.children[j].key)) {
+                  return (Long) children[j].val;
+              }
+          }
+      }else{
+          for(int j = 0; j < x.m; j++){
+              if(j+1 == x.m || less(key,x.children[j+1].key))
+                  return search(x.children[j].nect, key, hegiht-1); 
+          }
+      }
+      return null; 
+  }
+  
+  private Long searchFrequency(Node x, Long key, int height){
+      Entry[] children = x.children; 
+      if(height==0){
+          for(int j =0; j <x.m; j++){
+              if(key.equals(children[j].key)){
+                  chilren[j].frequency++; 
+                  return (Long) children[j].val; 
+              }
+          }
+      }else{
+          for(int j =0; j <x.m; j++){
+              if(j+1 ==x.m || less(key, children{j+1}.key))
+                  return searchFrequency(childre{j}.nect, key, height-1); 
+          }
+      }
+      reutn null; 
+  }
+      
+      
+      
+      
+     
+      
+      
   
   public BtreeNode search(int k){
       if(this.root == null)
@@ -253,7 +297,7 @@ public class BTreeNode {
               
               long childRed = ByteUtils.bytesToLong(cub); 
               
-              if(chldRed >= 0){
+              if(childRed >= 0){
                 children.add(childRed);
               }
             }
