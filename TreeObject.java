@@ -10,19 +10,23 @@ private int duplicates;
     this.duplicates = 1;
   }
   
-  //NEED TO DO
   public int increaseDuplicates(){
+    this.duplicates++; 
   }
   
-  public void setDuplicates(){
+  public void setDuplicates(int duplicates){
+    this.duplicates = duplicates; 
   }
   
   public long  getKey(){
+    return this.key; 
   }
   
   public void setKey(long key){
+    this.key = key; 
     
   }
+ 
   
   public int compareTo(TreeObject t){
     if(this.key > t.getKey()){
