@@ -1,7 +1,12 @@
 
 public class BTreeNode {
 
-  
+    public class Node{
+    long fileIndex; 
+    int n = 0; 
+    boolean leaf = true; 
+    ArrayList<Key> keys = new ArrayList<Key>(); 
+    ArrayList<Long> children = new ArrayList<Long>(); 
   
   private void BTreeInsertNonfull(Node x, long x){
     int i = x.n; 
@@ -113,6 +118,7 @@ public class BTreeNode {
     
     
   //Node Stuff
+    
   public Node(){
     fileIndex = nextAvailableFileIndex; 
     nextAvailableFileIndex += nodeSizeOnDisk(); 
@@ -161,6 +167,91 @@ public class BTreeNode {
     else
       child.set(i - 1, c.fileIndex); 
   }
+  
     
-    
+    void writeToFile(){
+      try{
+        ByteBuffer buffer = ByteBuffer.allocate(nodeSizeOneDisk()); 
+        file.seek(fileIndex); 
+        
+        int numChildren = n +1; 
+        
+        for( int i = 0; i < 2 *t -1; i++){
+          if(i <n){
+            Key k = key.get(i); 
+            byte[] valb = ByteUtils.longToBytes(k.val); 
+            buffer.put(valb); 
+            buffer.put(ByteUtils.intToBytes(k.frequency)); 
+          }else{
+            buffer.put(ByteUtils.longToBytes(-1)); 
+            buffer.put(ByteUtils.intToBytes(-1)); 
+          }
+        }
+        
+        for(int i = 0; i <2*t; i++){
+          if(numchildren > i && !leaf){
+            buffer.put(ByteUtil.longToBytes(children.get(1))); 
+          }else{
+            buffer.put(ByteUtils.longToBytes(-1)); 
+          }
+        }
+        
+        file.write(buffer.array()); 
+        
+        if(useCache){
+          cache.addObject(this); 
+        }
+      }
+      
+      void readFromFile(long idx){
+        try{
+          fileIndex = idx; 
+          file.seek(fileIndex); 
+          Node newNode = null; 
+          
+          if(useCache)
+            newode = getNode(FileIndex); 
+          if(useCache && cache.getObject(newNode)){
+            this.fileIndex = newNode.fileIndex; 
+            this.n = newNode.n; 
+            this.leaf = newNode.leaf; 
+            this.keys = newNode.keys; 
+            this.children = newNode.children; 
+          }else{
+            n = 0; 
+            
+            for(int i = 0; i < 2*t-1; i++){ 
+              byte[] vb = new byte[8]; 
+              file.read(vb); 
+              long value = ByteUtils.bytesToLong(vb); 
+              int frequency - file.readInt(); 
+              
+              if(value >=0){
+                Key k = new Key(value); 
+                k.frequency = frequency; 
+                keys.add(k); 
+                n++; 
+              }
+            }
+            for(int i = 0; i <2*t; i++){ 
+              byte[] cub = new byte[8]; 
+              file.read(cub); 
+              
+              long childRed = ByteUtils.bytesToLong(cub); 
+              
+              if(chldRed >= 0){
+                children.add(childRed);
+              }
+            }
+            leaf = children.isEmpty(); 
+            
+            if(useCache)
+              cache.addObject(this); 
+          }
+          
+        }catch(IOExpection e){
+          System.out.printlin("An error in readFromFile method");
+        }
+      }
+         
 }
