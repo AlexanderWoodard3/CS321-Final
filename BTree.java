@@ -1,13 +1,17 @@
 import java.io.FileWriter; 
 import java.io.IOException; 
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.LinkedList;
     
 public class BTree {
     private Node root; 
+    private Node child; 
     private int height; 
     private int n; 
     private int nodeCount =1; 
-    private Entry[] children = new Entry[4];
+    private Entry[] childre = new Entry[4];
     
     public class Node{
     long fileIndex; 
@@ -15,9 +19,10 @@ public class BTree {
     boolean leaf = true; 
     ArrayList<Key> keys = new ArrayList<Key>(); 
     ArrayList<Long> children = new ArrayList<Long>();
+    }
         
   
-  private void BTreeInsertNonfull(Node x, long x){
+  private void BTreeInsertNonfull(Node x, long k){
     int i = x.n; 
     if(x.leaf){
       while (i >= 1 && k < x.key(i).val){
@@ -28,8 +33,9 @@ public class BTree {
       x.n++; 
       
       x.writeToFile(); 
+      
     }else{
-      while(i >= && k < x.key(i).val){
+      while(i >= 1 && k < x.key(i).val){
         i--; 
       }
       i++; 
@@ -41,13 +47,14 @@ public class BTree {
         }
       }
       BTreeInsertNonfull(x.child(i), k); 
+    }
   }
   
   //NEED TO DO  
-  publlic Long BTreeSearchFrequency(long key){
-    
+  public Long BTreeSearchFrequency(long key){
+    return key; 
   }
-      
+      /*
   private Long search(Node x, Long key, int height){
       Entry[] children = x.children; 
       
@@ -66,20 +73,21 @@ public class BTree {
       }
       return null; 
   }
+  */
   
   private Long searchFrequency(Node x, Long key, int height){
       Entry[] children = x.children; 
       if(height==0){
           for(int j =0; j <x.m; j++){
               if(key.equals(children[j].key)){
-                  chilren[j].frequency++; 
+                  children[j].frequency++; 
                   return (Long) children[j].val; 
               }
           }
       }else{
           for(int j =0; j <x.m; j++){
-              if(j+1 ==x.m || less(key, children{j+1}.key))
-                  return searchFrequency(childre{j}.nect, key, height-1); 
+              if(j+1 ==x.m || less(key, children[j+1].key))
+                  return searchFrequency(children[j].nect, key, height-1); 
           }
       }
       return null; 
@@ -91,13 +99,13 @@ public class BTree {
      
       
       
-  
+ /* 
   public BtreeNode search(int k){
       if(this.root == null)
           return null; 
       else
           return this.root.search(k); 
-  }
+  }*/
       
   public void BTreeInsert(long k){
    Node r = root; 
@@ -114,7 +122,9 @@ public class BTree {
   } 
     
     
-  private void BTreeSplitChild(Node x, int i){
+
+
+private void BTreeSplitChild(Node x, int i){
     Node z = new Node(); 
     Node y = x.child(i); 
     z.leaf = y.leaf; 
@@ -155,7 +165,7 @@ public class BTree {
   }
     
   String stringRepr(int level){
-    string x = ""; 
+    String x = ""; 
     for(int i=0; i < level; i++){ 
       x += "   "; 
     } 
@@ -168,7 +178,7 @@ public class BTree {
       }
       x += "   " + key(i).val + " (" + new String(key(i).sequence())
     }
-    for(int i = 1; i <= n+1 && i <= childre.size(); i++){
+    for(int i = 1; i <= n+1 && i <= children.size(); i++){
       x += child(i).stringRepr(level+1); 
     }
     
@@ -184,9 +194,9 @@ public class BTree {
     nextAvailableFileIndex += nodeSizeOnDisk(); 
   }
   
-  int nodeSizeDisk(){
+  int nodeSizeOnDisk(){
     return ( 2 * t) * 64 + ( 2 * t - 1) * ( 64 + 32 ); 
-  )
+  }
   
   Node getNode(long idx){
     Node newNode = null; 
@@ -214,7 +224,7 @@ public class BTree {
     return keys.get(i - 1); 
   }
     
-  void setKey(in i, Key key); 
+  void setKey(int i, Key key); 
     if(i - 1 == keys.size())
       keys.add(key); 
     else
@@ -231,7 +241,7 @@ public class BTree {
     
     void writeToFile(){
       try{
-        ByteBuffer buffer = ByteBuffer.allocate(nodeSizeOneDisk()); 
+        ByteBuffer buffer = ByteBuffer.allocate(nodeSizeOnDisk()); 
         file.seek(fileIndex); 
         
         int numChildren = n +1; 
@@ -250,7 +260,7 @@ public class BTree {
         
         for(int i = 0; i <2*t; i++){
           if(numchildren > i && !leaf){
-            buffer.put(ByteUtil.longToBytes(children.get(1))); 
+            buffer.put(ByteUtils.longToBytes(children.get(1))); 
           }else{
             buffer.put(ByteUtils.longToBytes(-1)); 
           }
@@ -284,7 +294,7 @@ public class BTree {
               byte[] vb = new byte[8]; 
               file.read(vb); 
               long value = ByteUtils.bytesToLong(vb); 
-              int frequency - file.readInt(); 
+              int frequency = file.readInt(); 
               
               if(value >=0){
                 Key k = new Key(value); 
