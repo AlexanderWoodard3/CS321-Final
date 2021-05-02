@@ -7,13 +7,15 @@ public class BTreeNode {
     private int height; 
     private int n; 
     private int nodeCount =1; 
+    private Entry[] childre = new Entry[4];
     
     public class Node{
     long fileIndex; 
     int n = 0; 
     boolean leaf = true; 
     ArrayList<Key> keys = new ArrayList<Key>(); 
-    ArrayList<Long> children = new ArrayList<Long>(); 
+    ArrayList<Long> children = new ArrayList<Long>();
+        
   
   private void BTreeInsertNonfull(Node x, long x){
     int i = x.n; 
@@ -80,7 +82,7 @@ public class BTreeNode {
                   return searchFrequency(childre{j}.nect, key, height-1); 
           }
       }
-      reutn null; 
+      return null; 
   }
       
       
