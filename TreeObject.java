@@ -3,6 +3,7 @@ public class TreeObject{
 private long key; 
 private int sequenceData; 
 private int duplicates; 
+private int frequency; 
 
   public TreeObject(long key, int sequenceData){
     this.key = key; 
@@ -25,6 +26,14 @@ private int duplicates;
   public void setKey(long key){
     this.key = key; 
     
+  }
+  
+  public int getFrequency(){ 
+    return this.frequency; 
+  }
+  
+  public void increaseFrequency(){
+    this.frequency++; 
   }
  
   
