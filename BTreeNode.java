@@ -1,6 +1,13 @@
-
+import java.io.FileWriter; 
+import java.io.IOException; 
+import java.io.PrintWriter;
+    
 public class BTreeNode {
-
+    private Node root; 
+    private int height; 
+    private int n; 
+    private int nodeCount; 
+    
     public class Node{
     long fileIndex; 
     int n = 0; 
@@ -38,7 +45,14 @@ public class BTreeNode {
   publlic int BTreeSearchFrequency(long key){
     
   }
-    
+  
+  public BtreeNode search(int k){
+      if(this.root == null)
+          return null; 
+      else
+          return this.root.search(k); 
+  }
+      
   public void BTreeInsert(long k){
    Node r = root; 
    if(r.n == 2*t-1){ 
