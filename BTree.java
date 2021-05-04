@@ -97,7 +97,22 @@ public class Node {
 		else
 			return this.root.search(k);
 	}
-
+	
+	public Long BTreeSearch(Node x, Long k) {
+		int i = 1; 
+		
+		while( i <= x.n && k > x.key(i)) {
+			i = i+1; 
+		}
+		if(i <= x.n && k==x.key(i)) {
+			return(x,k);
+		}else if(x.leaf){
+			return null; 
+		}else {
+			return BTreeSearch(x.child(i), k); 
+		}
+	}
+	
 	public void BTreeInsert(long k) {
 		Node r = root;
 		if (r.n == 2 * t - 1) {
@@ -183,7 +198,7 @@ public class Node {
 		nextAvailableFileIndex += nodeSizeOnDisk();
 	}
 
-	int nodeSizeDisk(){
+	int nodeSizeOnDisk(){
     	return ( 2 * t) * 64 + ( 2 * t - 1) * ( 64 + 32 ); 
 	}
 
@@ -228,7 +243,7 @@ public class Node {
 
 	void writeToFile(){
       try{
-        ByteBuffer buffer = ByteBuffer.allocate(nodeSizeOneDisk()); 
+        ByteBuffer buffer = ByteBuffer.allocate(nodeSizeOnDisk()); 
         file.seek(fileIndex); 
         
         int numChildren = n +1; 
@@ -247,7 +262,7 @@ public class Node {
         
         for(int i = 0; i < 2 * t; i++){
           if(numchildren > i && !leaf){
-            buffer.put(ByteUtil.longToBytes(children.get(1))); 
+            buffer.put(ByteUtils.longToBytes(children.get(1))); 
           }else{
             buffer.put(ByteUtils.longToBytes(-1)); 
           }
@@ -258,6 +273,13 @@ public class Node {
         if(useCache){
           cache.addObject(this); 
         }
+        
+        file.getFD().sync(); 
+        
+      	}catch(IOException e) {
+    	  System.out.println("An error in writeToFile methode");
+      	}
+      
       }
 
 	void readFromFile(long idx) {
@@ -306,9 +328,9 @@ public class Node {
 					cache.addObject(this);
 			}
 
-		} catch (IOExpection e) {
+		} catch (IOException e) {
 			System.out.println("An error in readFromFile method");
 		}
 	}
 
-}
+
