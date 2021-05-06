@@ -10,7 +10,7 @@ public class BTreeNode {
 		long fileIndex;
 		long nextAvailableFileIndex; 
 		int n;
-		int t; //NOT SURE
+		int t;
 		boolean leaf;
 		//private File myFile;
 		
@@ -21,7 +21,7 @@ public class BTreeNode {
 		//New BTreeNode
 		public BTreeNode() { 
 			n = 0;
-			t = 0; //NOT SURE
+			t = 0;
 			leaf = true;
 			
 			keys = new ArrayList<beMyKey>();
@@ -34,7 +34,7 @@ public class BTreeNode {
 		
 		public BTreeNode(int degree) { 
 			n = 0;
-			this.t = degree; //NOT SURE
+			this.t = degree;
 			leaf = true;
 			
 			keys = new ArrayList<beMyKey>();
