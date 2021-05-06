@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.File;
 
-public class BTreeNode {
-	
 		long fileIndex;
 		long nextAvailableFileIndex; 
 		int n;
@@ -18,6 +16,9 @@ public class BTreeNode {
 		ArrayList<Long> children;
 		ArrayList<BTreeNode> nodeChildren; 
 		
+public class BTreeNode {
+	
+
 		//New BTreeNode
 		public BTreeNode() { 
 			n = 0;
