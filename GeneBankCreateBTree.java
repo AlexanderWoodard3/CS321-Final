@@ -26,7 +26,7 @@ public class GeneBankCreateBTree {
 
         String gbkFile = args[2];
 
-        Int sequenceLength = Integer.parseInt(args[3]);
+        int sequenceLength = Integer.parseInt(args[3]);
         if(sequenceLength > 31 || sequenceLength < 1) {
             System.out.println("Sequence length out of range: 1-31 supported.");
             return;
@@ -207,5 +207,3 @@ public class GeneBankCreateBTree {
     }
 
 }
-
-

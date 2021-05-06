@@ -12,7 +12,7 @@ private int frequency;
   }
   
   public int increaseDuplicates(){
-    this.duplicates++; 
+    return this.duplicates++; 
   }
   
   public void setDuplicates(int duplicates){
@@ -45,6 +45,7 @@ private int frequency;
     }else{
       return 0; 
   }
+}
 
 
 
