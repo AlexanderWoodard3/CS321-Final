@@ -1,8 +1,5 @@
 import java.io.File;
 
-
-public class BTree{
-	
 	private BTreeNode root;
 	private int height;
 	private int n;
@@ -10,6 +7,10 @@ public class BTree{
 	private Long val; 
 	private int frequency; 
 	private File myFile;
+
+public class BTree{
+	
+
 	//private int BTreeNodeCount = 1;
 	
 	public BTree(int degrees, File aFile) {
