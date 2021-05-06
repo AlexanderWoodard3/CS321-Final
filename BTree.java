@@ -20,6 +20,40 @@ public class BTree{
 		this.myFile = aFile; 
 		
 	}
+	/**
+	 * Creates an empty B-tree
+	 *
+	 * @param fileName - file to be written to
+	 */
+	public BTree(String fileName)
+	{
+		this.fileName = fileName;
+
+		try
+		{
+			RandomAccessFile diskFile = new RandomAccessFile(fileName, "rws");
+			diskFile.seek(0);
+
+			/*Get location of root node */
+			int rootLocation = diskFile.readInt();
+
+			/* Read t of table */
+			this.t = diskFile.readInt();
+
+			/* Read current offset of table */
+			this.currentOffset = diskFile.readInt();
+
+			/* Set root */
+			this.root = diskRead(rootLocation);
+
+			diskFile.close();
+
+		}
+		catch(IOException e)
+		{
+			System.out.println("shit broke");
+		}
+	}
 	
 	// NEED TO DO
 	public Long BTreeSearchFrequency(long key) {
@@ -119,8 +153,36 @@ public class BTree{
 		y.writeToFile();
 
 	}
-	
-	
+	public static String longToString(long l)
+	{
+		String binary = Long.toBinaryString(l);
+		String retVal = "";
+		while(binary.length() % 2 != 0)
+		{
+			binary = "0" + binary;
+		}
+		for(int i = 0; i < binary.length(); i+= 2)
+		{
+			switch(binary.substring(i, i + 2))
+			{
+				case "00":
+					retVal += "a";
+					break;
+				case "01":
+					retVal += "t";
+					break;
+				case "10":
+					retVal += "c";
+					break;
+				case "11":
+					retVal += "g";
+					break;
+			}
+		}
+		return retVal;
+	}
+
+
 	//String Stuff
 	public String toString() {
 		return "Value:" + val + " Frequency"+ frequency;

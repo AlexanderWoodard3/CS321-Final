@@ -62,7 +62,7 @@ public class GeneBankSearch {
 		StringBuilder dumpBuilder = new StringBuilder();
 		for(Long l : queries)
 		{
-			int frequency = searchTree.search(l);
+			int frequency = (searchTree.search(l)).intValue();
 			if(debugLevel == 1)
 			{
 				dumpBuilder.append(BTree.longToString(l) + ": " + frequency);
