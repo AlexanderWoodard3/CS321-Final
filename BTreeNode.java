@@ -17,7 +17,14 @@ import java.io.File;
 		ArrayList<BTreeNode> nodeChildren; 
 		
 public class BTreeNode {
-	
+/**
+*BTreeNode Class - suppose to hold all the methods for a BTree
+*Created with help from the professor
+*CS321 - Final Projet
+*
+*May 7Th 2021
+*@Olivia Coca
+**/
 
 		//New BTreeNode
 		public BTreeNode() { 
